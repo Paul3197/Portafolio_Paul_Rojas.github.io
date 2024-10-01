@@ -1,4 +1,4 @@
-const roles = ["Sys Admin", "Devops", "Cloud Computing"];
+const roles = ["Devops", "Cloud Computing"];
 let roleIndex = 0;
 let charIndex = 0;
 let currentRole = "";
@@ -43,4 +43,20 @@ window.addEventListener('scroll', function () {
             section.classList.add('show');
         }
     });
+});
+
+document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const templateParams = {
+        from_email: document.getElementById('email').value,
+        message: document.getElementById('message').value,
+    };
+
+    emailjs.send('service_4zt4hoe', 'template_g4nurdq', templateParams)
+        .then(function(response) {
+            alert('Correo enviado exitosamente!', response.status, response.text);
+        }, function(error) {
+            alert('Hubo un error al enviar el correo.', error);
+        });
 });

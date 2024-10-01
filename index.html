@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paul Rojas | Developer</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 <body>
     <nav id="navbar">
@@ -28,7 +29,7 @@
                 <a href="#contact" class="btn">Contáctame</a>
             </div>
             <div class="image-section">
-                <img src="/src/profile.png" alt="Paul Rojas" class="floating-image" id="profile">
+                <img src="/src/Profile.png" alt="Paul Rojas" class="floating-image" id="profile">
             </div>
         </div>
     </header>
@@ -36,7 +37,7 @@
     <section id="about">
         <div class="container">
             <h2>Sobre Mí</h2>
-            <p>Soy un desarrollador apasionado por la tecnología y la ciencia de datos...</p>
+            <p>Soy un desarrollador apasionado por la tecnología, con un enfoque DevOps y Cloud Computing. Mi pasatiempo es leer libros y jugar voleibol, mi objetivo personal es ser la mejor version de mi mismo.</p>
         </div>
     </section>
 
@@ -44,20 +45,20 @@
         <div class="container">
             <h2>Habilidades</h2>
             <div class="skills-grid">
-                <div class="skill"><img src="/src/python.png" alt="Python">Python</div>
-                <div class="skill"><img src="/src/azure.png" alt="Azure">Azure</div>
-                <div class="skill"><img src="/src/linux.png" alt="Linux">Linux</div>
-                <div class="skill"><img src="/src/git.png" alt="Git">Git</div>
-                <div class="skill"><img src="/src/github.png" alt="Github">Github</div>
-                <div class="skill"><img src="/src/bash.png" alt="bash">Bash</div>
+                <div class="skill"><img src="/src/Python.png" alt="Python">Python</div>
+                <div class="skill"><img src="/src/Azure.png" alt="Azure">Azure</div>
+                <div class="skill"><img src="/src/Linux.png" alt="Linux">Linux</div>
+                <div class="skill"><img src="/src/Git.png" alt="Git">Git</div>
+                <div class="skill"><img src="/src/Github.png" alt="Github">Github</div>
+                <div class="skill"><img src="/src/Bash.png" alt="bash">Bash</div>
             </div>
         </div>
         <div class="container">
             <h2>Aprendiendo</h2>
             <div class="skills-grid">
-                <div class="skill"><img src="/src/devops.png" alt="DevOps">Azure DevOps</div>
-                <div class="skill"><img src="/src/docker.png" alt="Docker">Docker</div>
-                <div class="skill"><img src="/src/terraform.png" alt="Terraform">Terraform</div>
+                <div class="skill"><img src="/src/Devops.png" alt="DevOps">Azure DevOps</div>
+                <div class="skill"><img src="/src/Docker.png" alt="Docker">Docker</div>
+                <div class="skill"><img src="/src/Terraform.png" alt="Terraform">Terraform</div>
             </div>
         </div>
     </section>
@@ -67,7 +68,7 @@
             <h2>Proyectos</h2>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
-                    <img src="/src/solarsystem.png" alt="Proyecto 1">
+                    <img src="/src/Solarsystem.png" alt="Proyecto 1">
                     <a href="https://master--fantastic-pudding-b898d7.netlify.app/" target="_blank" rel="noopener noreferrer">
                         <button>Solar System</button>
                     </a>
@@ -91,8 +92,8 @@
         <div class="container">
             <h2>Contacto</h2>
             <form id="contactForm">
-                <input type="email" id="email" placeholder="Tu correo electrónico" required>
-                <textarea id="message" placeholder="Tu mensaje" rows="5" required></textarea>
+                <input type="email" id="email" name="email" placeholder="Tu correo electrónico" required>
+                <textarea id="message" name="message" placeholder="Tu mensaje" rows="5" required></textarea>
                 <button type="submit">Enviar</button>
             </form>
         </div>
