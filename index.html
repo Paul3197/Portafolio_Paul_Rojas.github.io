@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paul Rojas | Developer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav id="navbar">
+        <div class="container">
+            <h1 class="logo">Paul Rojas</h1>
+            <ul class="nav-links">
+                <li><a href="#about">Sobre Mí</a></li>
+                <li><a href="#skills">Habilidades</a></li>
+                <li><a href="#portfolio">Proyectos</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header id="hero">
+        <div class="container hero-content">
+            <div class="text-section">
+                <h2>Hola, soy <span id="dynamic-name">Paul Rojas</span></h2>
+                <h1><span id="typewriter"></span></h1>
+                <p>Creando soluciones modernas con tecnología avanzada</p>
+                <a href="#contact" class="btn">Contáctame</a>
+            </div>
+            <div class="image-section">
+                <img src="/src/profile.png" alt="Paul Rojas" class="floating-image" id="profile">
+            </div>
+        </div>
+    </header>
+
+    <section id="about">
+        <div class="container">
+            <h2>Sobre Mí</h2>
+            <p>Soy un desarrollador apasionado por la tecnología y la ciencia de datos...</p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2>Habilidades</h2>
+            <div class="skills-grid">
+                <div class="skill"><img src="/src/python.png" alt="Python">Python</div>
+                <div class="skill"><img src="/src/azure.png" alt="Azure">Azure</div>
+                <div class="skill"><img src="/src/linux.png" alt="Linux">Linux</div>
+                <div class="skill"><img src="/src/git.png" alt="Git">Git</div>
+                <div class="skill"><img src="/src/github.png" alt="Github">Github</div>
+                <div class="skill"><img src="/src/bash.png" alt="bash">Bash</div>
+            </div>
+        </div>
+        <div class="container">
+            <h2>Aprendiendo</h2>
+            <div class="skills-grid">
+                <div class="skill"><img src="/src/devops.png" alt="DevOps">Azure DevOps</div>
+                <div class="skill"><img src="/src/docker.png" alt="Docker">Docker</div>
+                <div class="skill"><img src="/src/terraform.png" alt="Terraform">Terraform</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="container">
+            <h2>Proyectos</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="/src/solarsystem.png" alt="Proyecto 1">
+                    <a href="https://master--fantastic-pudding-b898d7.netlify.app/" target="_blank" rel="noopener noreferrer">
+                        <button>Solar System</button>
+                    </a>
+                    <p>Una replica del sistema solar usando React y Three.js</p>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/src/project2.png" alt="Proyecto 2">
+                    <button>Proyecto 2</button>
+                    <p>Descripción del proyecto 2...</p>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/src/project2.png" alt="Proyecto 3">
+                    <button>Proyecto 3</button>
+                    <p>Descripción del proyecto 3...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Contacto</h2>
+            <form id="contactForm">
+                <input type="email" id="email" placeholder="Tu correo electrónico" required>
+                <textarea id="message" placeholder="Tu mensaje" rows="5" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
