@@ -1,4 +1,10 @@
-const roles = ["Devops", "Cloud Computing"];
+document.addEventListener("DOMContentLoaded", function () {
+    emailjs.init("mQ18pdoFa1aIYfdXD");
+
+    setTimeout(type, typingSpeed + 500);
+});
+
+const roles = ["DevOps", "Cloud Computing"];
 let roleIndex = 0;
 let charIndex = 0;
 let currentRole = "";
@@ -30,10 +36,6 @@ function erase() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(type, typingSpeed + 500);
-});
-
 window.addEventListener('scroll', function () {
     const sections = document.querySelectorAll('section');
     const scrollPosition = window.scrollY + window.innerHeight - 100;
@@ -48,6 +50,9 @@ window.addEventListener('scroll', function () {
 document.getElementById('contactForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
+    const btn = document.getElementById('button');
+    btn.textContent = 'Enviando...';
+
     const templateParams = {
         from_email: document.getElementById('email').value,
         message: document.getElementById('message').value,
@@ -55,8 +60,10 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 
     emailjs.send('service_4zt4hoe', 'template_g4nurdq', templateParams)
         .then(function(response) {
-            alert('Correo enviado exitosamente!', response.status, response.text);
+            btn.textContent = 'Enviar';
+            alert('Correo enviado exitosamente!');
         }, function(error) {
-            alert('Hubo un error al enviar el correo.', error);
+            btn.textContent = 'Enviar';
+            alert('Hubo un error al enviar el correo: ' + JSON.stringify(error));
         });
 });
