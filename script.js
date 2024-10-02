@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    emailjs.init("mQ18pdoFa1aIYfdXD");
+    emailjs.init('mQ18pdoFa1aIYfdXD');
 
     setTimeout(type, typingSpeed + 500);
 });
