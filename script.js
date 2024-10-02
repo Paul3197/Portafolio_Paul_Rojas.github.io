@@ -47,14 +47,14 @@ window.addEventListener('scroll', function () {
     });
 });
 
-document.getElementById('contactForm').addEventListener('submit', function(event) {
+ddocument.getElementById('contactForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const btn = document.getElementById('button');
     btn.textContent = 'Enviando...';
 
     const templateParams = {
-        email: document.getElementById('email').value,git ad .
+        email: document.getElementById('email').value,
         message: document.getElementById('message').value,
         email_id: '',
     };
