@@ -54,8 +54,9 @@ document.getElementById('contactForm').addEventListener('submit', function(event
     btn.textContent = 'Enviando...';
 
     const templateParams = {
-        from_email: document.getElementById('email').value,
+        email: document.getElementById('email').value,git ad .
         message: document.getElementById('message').value,
+        email_id: '',
     };
 
     emailjs.send('service_4zt4hoe', 'template_g4nurdq', templateParams)
