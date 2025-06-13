@@ -1,14 +1,5 @@
 import { useEffect, useRef } from "react";
 
-const pieces = [
-  "rey.webp",
-  "dama.webp",
-  "peon.webp",
-  "caballo.webp",
-  "torre.webp",
-  "alfil.webp",
-];
-
 export default function AnimatedGlobalBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -25,21 +16,16 @@ export default function AnimatedGlobalBackground() {
     let pulse = 0;
     let direction = 1;
 
-    const pieceImages: HTMLImageElement[] = [];
-    const pieceElements: {
-      image: HTMLImageElement;
-      x: number;
-      y: number;
-      opacity: number;
-      side: "left" | "right";
-      timer: number;
-    }[] = [];
-
-    pieces.forEach((src) => {
-      const img = new Image();
-      img.src = `../assets/${src}`;
-      img.onload = () => pieceImages.push(img);
-    });
+    const sparkles: { x: number; y: number; size: number; opacity: number; speed: number }[] = [];
+    for (let i = 0; i < 50; i++) {
+      sparkles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 2 + 1,
+        opacity: Math.random(),
+        speed: Math.random() * 0.5 + 0.2,
+      });
+    }
 
     function drawBackground(context: CanvasRenderingContext2D) {
       const gradient = context.createRadialGradient(
@@ -58,41 +44,26 @@ export default function AnimatedGlobalBackground() {
       context.fillRect(0, 0, width, height);
     }
 
-    function drawPieces(context: CanvasRenderingContext2D) {
-      const now = Date.now();
-      pieceElements.forEach((piece, i) => {
-        const timeElapsed = now - piece.timer;
-        if (timeElapsed > 3000) {
-          pieceElements.splice(i, 1);
-          return;
-        }
+    function drawSparkles(context: CanvasRenderingContext2D) {
+      sparkles.forEach((sparkle) => {
+        sparkle.y -= sparkle.speed;
+        if (sparkle.y < 0) sparkle.y = height;
+        sparkle.opacity = 0.5 + 0.5 * Math.sin(Date.now() / 200 + sparkle.x);
 
-        const fadeTime = 1000;
-        const fadeIn = Math.min(timeElapsed / fadeTime, 1);
-        const fadeOut = Math.max(0, (3000 - timeElapsed) / fadeTime);
-        piece.opacity = Math.min(fadeIn, fadeOut);
-
-        const scale = 1.5;
-        context.save();
-        context.translate(piece.x, piece.y);
-        context.rotate((25 * Math.PI) / 180);
-        context.scale(scale, scale);
-        context.globalAlpha = piece.opacity;
-        context.shadowColor = "rgba(255, 215, 0, 0.4)";
-        context.shadowBlur = 20;
-        context.drawImage(
-          piece.image,
-          -piece.image.width / 2,
-          -piece.image.height / 2
-        );
-        context.restore();
+        context.beginPath();
+        context.arc(sparkle.x, sparkle.y, sparkle.size, 0, Math.PI * 2);
+        context.fillStyle = `rgba(255, 215, 0, ${sparkle.opacity})`;
+        context.shadowColor = "rgba(255, 215, 0, 0.8)";
+        context.shadowBlur = 8;
+        context.fill();
+        context.closePath();
       });
     }
 
     function animate() {
       ctx.clearRect(0, 0, width, height);
       drawBackground(ctx);
-      drawPieces(ctx);
+      drawSparkles(ctx);
 
       pulse += 0.003 * direction;
       if (pulse > 1 || pulse < -1) direction *= -1;
@@ -102,27 +73,13 @@ export default function AnimatedGlobalBackground() {
 
     animate();
 
-    const spawnPiece = () => {
-      if (pieceImages.length === 0) return;
-      const image = pieceImages[Math.floor(Math.random() * pieceImages.length)];
-      const side: "left" | "right" = Math.random() < 0.5 ? "left" : "right";
-      const x = side === "left" ? 80 : width - 80;
-      const y = Math.random() * height;
-      pieceElements.push({ image, x, y, opacity: 0, side, timer: Date.now() });
-    };
-
-    const interval = setInterval(spawnPiece, 2500);
-
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     };
 
     window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      clearInterval(interval);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
