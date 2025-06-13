@@ -16,8 +16,8 @@ export default function AnimatedGlobalBackground() {
     let pulse = 0;
     let direction = 1;
 
-    function drawBackground() {
-      const gradient = ctx.createRadialGradient(
+    function drawBackground(context: CanvasRenderingContext2D) {
+      const gradient = context.createRadialGradient(
         width / 2,
         height / 2,
         0,
@@ -26,18 +26,19 @@ export default function AnimatedGlobalBackground() {
         Math.max(width, height) * (0.8 + pulse * 0.1)
       );
 
-      gradient.addColorStop(0, '#3a3a3a'); // centro más claro (gris medio)
-      gradient.addColorStop(1, '#151515'); // bordes un gris oscuro (menos negro)
+      gradient.addColorStop(0, "#3a3a3a");
+      gradient.addColorStop(1, "#151515");
 
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, width, height);
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, width, height);
     }
 
     function animate() {
-      ctx.clearRect(0, 0, width, height);
-      drawBackground();
+      if (!ctx) return;
 
-      // animación suave tipo "respirar"
+      ctx.clearRect(0, 0, width, height);
+      drawBackground(ctx);
+
       pulse += 0.003 * direction;
       if (pulse > 1 || pulse < -1) direction *= -1;
 
