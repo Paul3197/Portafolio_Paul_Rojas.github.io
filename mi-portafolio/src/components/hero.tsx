@@ -76,6 +76,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
+          onClick={(e) => {
+            e.preventDefault();
+            const aboutSection = document.querySelector("#about");
+            if (aboutSection) {
+              aboutSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
           className="inline-block mt-10 px-6 py-3 bg-gradient-to-r from-sky-400 to-slate-100 hover:from-sky-300 hover:to-white transition rounded-full text-black font-semibold shadow-xl"
         >
           Ver más ↓
