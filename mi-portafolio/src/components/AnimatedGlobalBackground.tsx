@@ -1,24 +1,16 @@
-import { useEffect, useRef, useState } from "react";
-import rey from "../assets/rey.webp";
-import dama from "../assets/dama.webp";
-import peon from "../assets/peon.webp";
-import caballo from "../assets/caballo.webp";
-import torre from "../assets/torre.webp";
-import alfil from "../assets/alfil.webp";
+import { useEffect, useRef } from "react";
 
-const images = [rey, dama, peon, caballo, torre, alfil];
-
-interface Piece {
-  src: string;
-  id: string;
-  x: number;
-  y: number;
-  visible: boolean;
-}
+const pieces = [
+  "rey.webp",
+  "dama.webp",
+  "peon.webp",
+  "caballo.webp",
+  "torre.webp",
+  "alfil.webp",
+];
 
 export default function AnimatedGlobalBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [pieces, setPieces] = useState<Piece[]>([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -32,6 +24,22 @@ export default function AnimatedGlobalBackground() {
 
     let pulse = 0;
     let direction = 1;
+
+    const pieceImages: HTMLImageElement[] = [];
+    const pieceElements: {
+      image: HTMLImageElement;
+      x: number;
+      y: number;
+      opacity: number;
+      side: "left" | "right";
+      timer: number;
+    }[] = [];
+
+    pieces.forEach((src) => {
+      const img = new Image();
+      img.src = `../assets/${src}`;
+      img.onload = () => pieceImages.push(img);
+    });
 
     function drawBackground(context: CanvasRenderingContext2D) {
       const gradient = context.createRadialGradient(
@@ -50,11 +58,41 @@ export default function AnimatedGlobalBackground() {
       context.fillRect(0, 0, width, height);
     }
 
-    function animate() {
-      if (!ctx) return;
+    function drawPieces(context: CanvasRenderingContext2D) {
+      const now = Date.now();
+      pieceElements.forEach((piece, i) => {
+        const timeElapsed = now - piece.timer;
+        if (timeElapsed > 3000) {
+          pieceElements.splice(i, 1);
+          return;
+        }
 
+        const fadeTime = 1000;
+        const fadeIn = Math.min(timeElapsed / fadeTime, 1);
+        const fadeOut = Math.max(0, (3000 - timeElapsed) / fadeTime);
+        piece.opacity = Math.min(fadeIn, fadeOut);
+
+        const scale = 1.5;
+        context.save();
+        context.translate(piece.x, piece.y);
+        context.rotate((25 * Math.PI) / 180);
+        context.scale(scale, scale);
+        context.globalAlpha = piece.opacity;
+        context.shadowColor = "rgba(255, 215, 0, 0.4)";
+        context.shadowBlur = 20;
+        context.drawImage(
+          piece.image,
+          -piece.image.width / 2,
+          -piece.image.height / 2
+        );
+        context.restore();
+      });
+    }
+
+    function animate() {
       ctx.clearRect(0, 0, width, height);
       drawBackground(ctx);
+      drawPieces(ctx);
 
       pulse += 0.003 * direction;
       if (pulse > 1 || pulse < -1) direction *= -1;
@@ -64,67 +102,32 @@ export default function AnimatedGlobalBackground() {
 
     animate();
 
+    const spawnPiece = () => {
+      if (pieceImages.length === 0) return;
+      const image = pieceImages[Math.floor(Math.random() * pieceImages.length)];
+      const side: "left" | "right" = Math.random() < 0.5 ? "left" : "right";
+      const x = side === "left" ? 80 : width - 80;
+      const y = Math.random() * height;
+      pieceElements.push({ image, x, y, opacity: 0, side, timer: Date.now() });
+    };
+
+    const interval = setInterval(spawnPiece, 2500);
+
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     };
 
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPieces((prev) => {
-        const newPieces: Piece[] = [];
-
-        for (let i = 0; i < 2; i++) {
-          const img = images[Math.floor(Math.random() * images.length)];
-          const x = Math.random() * 100 < 50 ? 50 : window.innerWidth - 100;
-          const y = Math.random() * window.innerHeight * 0.8 + 50;
-
-          newPieces.push({
-            src: img,
-            id: `${Date.now()}-${Math.random()}`,
-            x,
-            y,
-            visible: true,
-          });
-        }
-
-        // auto-hide pieces after 1.5s
-        setTimeout(() => {
-          setPieces((p) => p.map((el) => ({ ...el, visible: false })));
-        }, 1500);
-
-        return newPieces;
-      });
-    }, 2500);
-
-    return () => clearInterval(interval);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearInterval(interval);
+    };
   }, []);
 
   return (
     <div className="fixed inset-0 -z-50 pointer-events-none">
       <canvas ref={canvasRef} className="w-full h-full" />
-      {pieces.map((piece) => (
-        <img
-          key={piece.id}
-          src={piece.src}
-          style={{
-            position: "absolute",
-            top: piece.y,
-            left: piece.x,
-            transform: `rotate(${Math.random() > 0.5 ? "25deg" : "-25deg"})`,
-            opacity: piece.visible ? 0.3 : 0,
-            transition: "opacity 1s ease-in-out, transform 1s ease-in-out",
-            width: "64px",
-            height: "64px",
-            filter: "drop-shadow(0 0 5px rgba(0,0,0,0.5))",
-          }}
-          alt="chess"
-        />
-      ))}
     </div>
   );
 }
