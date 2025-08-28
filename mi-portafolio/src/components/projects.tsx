@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import SolarSistem from "../assets/Solar_Sistem.webp";
 import vitaplus from "../assets/vitaplus.webp";
+import MasMejor from "../assets/MasMejor.png";
 
 
 export default function Projects() {
@@ -18,10 +19,10 @@ export default function Projects() {
       description: "Simulación interactiva del sistema solar con animaciones 3D."
     },
     {
-      name: "Indefinido",
-      image: "/projects/placeholder.png",
-      url: "#",
-      description: "Proyecto en desarrollo. Pronto disponible."
+      name: "MasMejor",
+      image: MasMejor,
+      url: "https://mas-mejor-pe.vercel.app",
+      description: "Blog de reseñas de servicios"
     }
   ];
 
